@@ -1,13 +1,29 @@
 const express = require('express')
 const User = require('../models/User')
 const router = express.Router()
+const { body , validationResult } =require('express-validator') 
 
 // create a user using POST "/api/auth" . Does not required auth
-router.post('/', (req, res) => {
-    console.log(req.body)
-    const user = User(req.body);
-    user.save()
-    res.send(res.body)
+router.post('/', [
+    // validating correct details entered or not
+    body('name',"Name should be atleast 3 digits").isLength({min:3}),
+    body('email','Please enter a valid email').isEmail(),
+    body('password','Password length must be atleast 5').isLength({min : 5}),
+], async (req, res) => {// if not added correctly errors
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors : errors.array()})
+    }
+
+    // save into database
+    User.create({
+        name : req.body.name,
+        email : req.body.email,
+        password : req.body.password,
+    }).then(user =>{
+        res.json(user)
+    })
 })
 
 module.exports = router;

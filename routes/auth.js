@@ -16,21 +16,24 @@ router.post('/', [
         return res.status(400).json({errors : errors.array()})
     }
 
-    // save into database
-    User.create({
-        name : req.body.name,
-        email : req.body.email,
-        password : req.body.password,
-    }).then(user =>{
-        res.json(user)
-    }).catch(error =>{
-        // if user already exits
-        if(error.code ==11000){
-            return res.status(400).json({error : "Email already exists"})
+   try {
+    // if user already exists then show user already exists
+       let user = await User.findOne({email : req.body.email})
+       if(user){
+           return res.status(400).json({error : "Email already exists"})
         }
-        // if other error
-        return res.status(500).json({error : "Internal Server error"})
-    })
+        // save into database
+     user = await User.create({
+         name : req.body.name,
+         email : req.body.email,
+         password : req.body.password,
+     })
+     
+     return res.json(user)
+   } catch (error) {
+    console.log("internal server error");
+    return res.status(500).json({error : "Internal Server error"})
+   }
 })
 
 module.exports = router;

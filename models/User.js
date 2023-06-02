@@ -21,5 +21,5 @@ const UserSchema = new Schema({
     },
 })
 const User  = mongoose.model('user',UserSchema) // model name , schema we created
-User.createIndexes();
+// User.createIndexes(); // implementing the same thing in auth using User.findOne()
 module.exports = User;

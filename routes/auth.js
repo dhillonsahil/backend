@@ -4,7 +4,7 @@ const router = express.Router()
 const { body , validationResult } =require('express-validator') 
 
 // create a user using POST "/api/auth" . Does not required auth
-router.post('/', [
+router.post('/createuser', [
     // validating correct details entered or not
     body('name',"Name should be atleast 3 digits").isLength({min:3}),
     body('email','Please enter a valid email').isEmail(),

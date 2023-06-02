@@ -3,7 +3,10 @@ const User = require('../models/User')
 const router = express.Router()
 const { body , validationResult } =require('express-validator') 
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
+// jwt secret usually kept in config file etc
+const jwt_secret = "IcanSeeYou$"
 // create a user using POST "/api/auth" . Does not required auth
 router.post('/createuser', [
     // validating correct details entered or not
@@ -34,7 +37,15 @@ router.post('/createuser', [
          password : secpass
      })
      
-     return res.json(user)
+
+     // sending auth token to user authToken:- user can access the site and we can verify it the user and not anyone else
+     const data = {
+        user:{
+            id : user.id
+        }
+     }
+     const authToken = jwt.sign(data,jwt_secret)
+     return res.json({authToken})
    } catch (error) {
     console.error("internal server error");
     return res.status(500).json({error : "Internal Server error"})

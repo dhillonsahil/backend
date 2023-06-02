@@ -20,5 +20,6 @@ const UserSchema = new Schema({
         default : Date.now
     },
 })
-
-module.exports = mongoose.model('user',UserSchema) // model name , schema we created
+const User  = mongoose.model('user',UserSchema) // model name , schema we created
+User.createIndexes();
+module.exports = User;

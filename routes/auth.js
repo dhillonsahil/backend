@@ -23,6 +23,13 @@ router.post('/', [
         password : req.body.password,
     }).then(user =>{
         res.json(user)
+    }).catch(error =>{
+        // if user already exits
+        if(error.code ==11000){
+            return res.status(400).json({error : "Email already exists"})
+        }
+        // if other error
+        return res.status(500).json({error : "Internal Server error"})
     })
 })
 

@@ -31,7 +31,7 @@ router.post('/', [
      
      return res.json(user)
    } catch (error) {
-    console.log("internal server error");
+    console.error("internal server error");
     return res.status(500).json({error : "Internal Server error"})
    }
 })

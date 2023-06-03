@@ -8,14 +8,14 @@ const { body, validationResult } = require('express-validator');
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
     try {
         const notes = await Notes.find({ user: req.user.id })
-    res.json(notes)
+        res.json(notes)
     } catch (error) {
         res.status(500).send("Internal Server error");
     }
 })
 
 
-// add  notres  get "api/auth/addnote". Login required
+// add  notes  get "api/auth/addnote". Login required
 router.post('/addnote', fetchuser, [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
     body('description', 'Enter a valid note').isLength({ min: 1 })
@@ -37,4 +37,27 @@ router.post('/addnote', fetchuser, [
     }
 })
 
+// route for update news
+router.put('/updatenote/:id', fetchuser, [
+    body('title', 'Please enter a valid title').isLength({ min: 3 })
+], async (req, res) => {
+    const { title, description, tag } = req.body;
+    // create a new note object
+    const newNote = {};
+    if (title) { newNote.title = title };
+    if (description) { newNote.description = description };
+    if (tag) { newNote.tag = tag };
+
+    // find the note not found for user
+    let note =await Notes.findById(req.params.id);
+    if (!note) { res.status(404).send("Not found") }
+
+    // check is user note and user same
+    if (note.user.toString() !== req.user.id) {
+        return res.status(401).send("Not allowed")
+    }
+
+    note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }), { new: true }
+    res.send({note})
+})
 module.exports = router;

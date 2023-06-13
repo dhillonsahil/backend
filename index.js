@@ -7,7 +7,7 @@ const port = process.env.PORT || 6501;
 app.use(cors())
 // CORS configuration
 const corsOptions = {
-    origin: 'http://localhost.localdomain:3000', // Replace with the actual origin of your frontend app
+    origin: 'http://takemynote.heavenwear.in/', // Replace with the actual origin of your frontend app
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)

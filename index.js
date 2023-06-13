@@ -3,7 +3,7 @@ const express = require('express')
 var cors = require('cors')
 connectToMongo();
 const app = express();
-const PORT = 5000;
+const port = process.env.PORT || 6501;
 app.use(cors())
 // CORS configuration
 const corsOptions = {
@@ -19,6 +19,6 @@ app.use(express.json()) // to use req.body we have to use this
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/notes',require('./routes/notes'))
 
-app.listen(PORT , ()=>{
+app.listen(port , ()=>{
     console.log(`TakemyNote app listening at http://localhost:${port}`)
 })

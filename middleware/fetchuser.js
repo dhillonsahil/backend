@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const jwt_secret = "IcanSeeYou$"
+const jwt_secret = process.env.jwt_secret
 
 const fetchuser = (req,res,next) =>{
     // get user from jwt token and add id to request token

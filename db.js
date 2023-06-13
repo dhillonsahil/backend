@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const mongooseUrl = "mongodb://localhost:27017/takemynote"
+const mongooseUrl = process.env.mongoUrl
 const connectToMongo = () => {
     mongoose.connect(mongooseUrl,()=>{
         console.log("connected to mongo sucessfully")

@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const fetchuser = require('../middleware/fetchuser')
 
 // jwt secret usually kept in config file etc
-const jwt_secret = "IcanSeeYou$"
+const jwt_secret = process.env.jwt_secret
 // create a user using POST "/api/auth" . Does not required auth
 router.post('/createuser', [
     // validating correct details entered or not

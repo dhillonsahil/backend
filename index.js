@@ -7,7 +7,7 @@ const port = process.env.PORT || 6501;
 app.use(cors())
 // CORS configuration
 const corsOptions = {
-    origin: 'https://takemynote.heavenwear.in/', // Replace with the actual origin of your frontend app
+    origin: 'https://takemynote.heavenwear.in', // Replace with the actual origin of your frontend app
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
